@@ -6,264 +6,533 @@
   <title>x call proxy — Windows Proxy Manager</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a1628; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
 
-    body {
-      background: #0a1628;
-      color: #e2e8f0;
-      font-family: 'Segoe UI', sans-serif;
-      min-height: 100vh;
-    }
-
-    /* NAV */
     nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 40px;
-      border-bottom: 1px solid #1e3a5f;
-      background: #0d1f3c;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 40px; border-bottom: 1px solid #1e3a5f; background: #0d1f3c;
+      flex-wrap: wrap; gap: 10px;
     }
-    .nav-logo {
-      font-size: 22px;
-      font-weight: 800;
-      color: #f0a500;
-      letter-spacing: 1px;
-    }
+    .nav-logo { font-size: 22px; font-weight: 800; color: #f0a500; letter-spacing: 1px; }
     .nav-logo span { color: #fff; }
+    .nav-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
-    /* HERO */
-    .hero {
-      text-align: center;
-      padding: 80px 20px 60px;
+    .btn-translate {
+      background: #1e3a5f; color: #60a5fa; border: 1px solid #2563eb55;
+      padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all .15s;
     }
-    .hero-badge {
-      display: inline-block;
-      background: #1a3a6a;
-      color: #60a5fa;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 5px 16px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      border: 1px solid #2563eb44;
-    }
-    .hero h1 {
-      font-size: 52px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .hero h1 span { color: #f0a500; }
-    .hero p {
-      font-size: 18px;
-      color: #94a3b8;
-      max-width: 520px;
-      margin: 0 auto 36px;
-      line-height: 1.6;
-    }
-
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-download {
-      background: linear-gradient(135deg, #f0a500, #d97706);
-      color: #0a1628;
-      font-size: 16px;
-      font-weight: 800;
-      padding: 14px 36px;
-      border-radius: 10px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 20px #f0a50055;
-    }
-    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 30px #f0a50077; }
+    .btn-translate:hover { background: #2563eb; color: #fff; }
 
     .btn-wa {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #25D366;
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      padding: 14px 32px;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: transform .15s, box-shadow .15s;
-      box-shadow: 0 4px 20px #25d36655;
+      display: flex; align-items: center; gap: 10px; background: #25D366; color: #fff;
+      font-size: 14px; font-weight: 700; padding: 9px 20px; border-radius: 10px;
+      text-decoration: none; transition: transform .15s; box-shadow: 0 4px 16px #25d36644;
     }
-    .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 30px #25d36677; }
-    .btn-wa svg { width: 22px; height: 22px; fill: #fff; }
+    .btn-wa:hover { transform: translateY(-2px); }
+    .btn-wa svg { width: 20px; height: 20px; fill: #fff; }
+
+    .hero { text-align: center; padding: 70px 20px 50px; }
+    .hero-badge {
+      display: inline-block; background: #1a3a6a; color: #60a5fa;
+      font-size: 13px; font-weight: 600; padding: 5px 16px; border-radius: 20px;
+      margin-bottom: 20px; border: 1px solid #2563eb44;
+    }
+    .hero h1 { font-size: 52px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 12px; }
+    .hero h1 span { color: #f0a500; }
+    .hero p { font-size: 18px; color: #94a3b8; max-width: 520px; margin: 0 auto 36px; line-height: 1.6; }
+
+    .btn-group { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .btn-download {
+      background: linear-gradient(135deg, #f0a500, #d97706); color: #0a1628;
+      font-size: 16px; font-weight: 800; padding: 14px 36px; border-radius: 10px;
+      text-decoration: none; box-shadow: 0 4px 20px #f0a50055; transition: transform .15s;
+    }
+    .btn-download:hover { transform: translateY(-2px); }
+    .btn-yt {
+      display: flex; align-items: center; gap: 10px; color: #fff;
+      font-size: 15px; font-weight: 700; padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; transition: transform .15s;
+    }
+    .btn-yt:hover { transform: translateY(-2px); }
+    .btn-yt svg { width: 20px; height: 20px; fill: #fff; }
 
     /* FEATURES */
-    .features {
-      padding: 60px 20px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .features h2 {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 40px;
-    }
+    .features { padding: 60px 20px; max-width: 960px; margin: 0 auto; }
+    .features h2 { text-align: center; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 40px; }
     .features h2 span { color: #f0a500; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #0d1f3c;
-      border: 1px solid #1e3a5f;
-      border-radius: 14px;
-      padding: 28px 24px;
-      transition: border-color .2s, transform .2s;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .card { background: #0d1f3c; border: 1px solid #1e3a5f; border-radius: 14px; padding: 28px 24px; transition: border-color .2s, transform .2s; }
     .card:hover { border-color: #f0a500; transform: translateY(-3px); }
     .card-icon { font-size: 32px; margin-bottom: 14px; }
     .card h3 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; }
     .card p { font-size: 14px; color: #64748b; line-height: 1.6; }
 
-    /* VIDEO SECTION (shown when YouTube link is added) */
-    .video-section {
-      padding: 60px 20px;
-      text-align: center;
-      background: #0d1f3c;
-    }
-    .video-section h2 {
-      font-size: 28px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 30px;
-    }
+    /* VIDEOS */
+    .video-section { padding: 60px 20px; text-align: center; background: #0d1f3c; }
+    .video-section h2 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 30px; }
     .video-section h2 span { color: #f0a500; }
-    .video-wrap {
-      max-width: 720px;
-      margin: 0 auto;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 2px solid #1e3a5f;
-      aspect-ratio: 16/9;
+    .video-grid { display: flex; gap: 24px; max-width: 1100px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .video-item { flex: 1; min-width: 280px; max-width: 520px; }
+    .video-label { color: #94a3b8; font-size: 14px; margin-bottom: 10px; font-weight: 600; text-align: left; }
+    .video-wrap { border-radius: 14px; overflow: hidden; border: 2px solid #1e3a5f; aspect-ratio: 16/9; }
+    .video-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* GUIDE */
+    .guide-section { padding: 70px 20px; max-width: 960px; margin: 0 auto; }
+    .guide-section h2 { text-align: center; font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .guide-section h2 span { color: #f0a500; }
+    .guide-subtitle { text-align: center; color: #64748b; font-size: 15px; margin-bottom: 50px; }
+
+    .guide-block { margin-bottom: 50px; }
+    .guide-block-title {
+      font-size: 20px; font-weight: 800; color: #f0a500;
+      border-left: 4px solid #f0a500; padding-left: 14px; margin-bottom: 20px;
     }
-    .video-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
+    .step-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .step-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      background: #0d1f3c; border: 1px solid #1e3a5f; border-radius: 12px; padding: 18px 20px;
+    }
+    .step-num {
+      min-width: 32px; height: 32px; background: #f0a500; color: #0a1628;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 15px; flex-shrink: 0;
+    }
+    .step-text { font-size: 15px; color: #cbd5e1; line-height: 1.6; }
+    .step-text b { color: #fff; }
+    .step-note {
+      margin-top: 8px; font-size: 13px; color: #f0a500;
+      background: #1a2f10; border: 1px solid #f0a50033; border-radius: 6px; padding: 6px 12px; display: inline-block;
+    }
+
+    /* EDGE WARNING CARD (in guide) */
+    .edge-warn {
+      background: #2d1500; border: 2px solid #f0a500; border-radius: 12px;
+      padding: 18px 20px; display: flex; gap: 14px; align-items: flex-start;
+    }
+    .edge-warn-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+    .edge-warn-body { flex: 1; }
+    .edge-warn-title { font-size: 15px; font-weight: 800; color: #f0a500; margin-bottom: 8px; }
+    .edge-warn-text { font-size: 14px; color: #fbbf24; line-height: 1.7; }
+    .edge-warn-text b { color: #fff; }
+    .edge-warn-steps {
+      margin-top: 10px; background: #1a0d00; border-radius: 8px; padding: 10px 14px;
+      font-size: 13px; color: #fbbf24; line-height: 1.8;
     }
 
     /* CTA */
-    .cta {
-      text-align: center;
-      padding: 70px 20px;
-    }
+    .cta { text-align: center; padding: 70px 20px; background: #0d1f3c; }
     .cta h2 { font-size: 30px; font-weight: 800; color: #fff; margin-bottom: 12px; }
     .cta p { color: #64748b; margin-bottom: 30px; font-size: 16px; }
 
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 24px;
-      border-top: 1px solid #1e3a5f;
-      color: #334155;
-      font-size: 13px;
+    footer { text-align: center; padding: 24px; border-top: 1px solid #1e3a5f; color: #334155; font-size: 13px; }
+
+    /* LANGUAGE TOGGLE */
+    body.urdu [data-en] { display: none !important; }
+    body.urdu [data-ur] { display: inline !important; }
+    body:not(.urdu) [data-ur] { display: none !important; }
+    body:not(.urdu) [data-en] { display: inline !important; }
+    body.urdu .block-en { display: none !important; }
+    body.urdu .block-ur { display: block !important; }
+    body:not(.urdu) .block-ur { display: none !important; }
+    body:not(.urdu) .block-en { display: block !important; }
+    body.urdu .iflex-ur { display: flex !important; }
+    body:not(.urdu) .iflex-ur { display: none !important; }
+    body.urdu .iflex-en { display: none !important; }
+    body:not(.urdu) .iflex-en { display: flex !important; }
+
+    /* FLOATING LANG BUTTON */
+    .float-lang {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      background: #f0a500; color: #0a1628; border: none;
+      padding: 12px 20px; border-radius: 30px; font-size: 14px; font-weight: 800;
+      cursor: pointer; box-shadow: 0 4px 20px #f0a50088; transition: transform .15s;
     }
+    .float-lang:hover { transform: translateY(-3px); }
+
+    /* ================================================================
+       LANGUAGE PICKER OVERLAY (shown on first visit)
+    ================================================================ */
+    #langPickerOverlay {
+      position: fixed; inset: 0; z-index: 999999;
+      background: #0a1628;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; padding: 30px 20px;
+    }
+    .lp-logo { font-size: 32px; font-weight: 900; color: #f0a500; letter-spacing: 1px; }
+    .lp-logo span { color: #fff; }
+    .lp-tagline { font-size: 14px; color: #475569; margin-bottom: 10px; }
+    .lp-heading {
+      font-size: 20px; font-weight: 700; color: #94a3b8; text-align: center;
+      margin-bottom: 16px; line-height: 1.6;
+    }
+    .lp-btns { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+    .lp-btn {
+      padding: 18px 52px; border-radius: 14px; font-size: 19px; font-weight: 800;
+      cursor: pointer; border: 2px solid; transition: all .2s; min-width: 210px;
+      text-align: center; font-family: inherit;
+    }
+    .lp-btn-en { background: #1e3a5f; color: #60a5fa; border-color: #2563eb; }
+    .lp-btn-en:hover { background: #2563eb; color: #fff; transform: translateY(-2px); }
+    .lp-btn-ur { background: #2d1500; color: #f0a500; border-color: #f0a500; }
+    .lp-btn-ur:hover { background: #f0a500; color: #0a1628; transform: translateY(-2px); }
+
+    /* ================================================================
+       READ-BEFORE-DOWNLOAD MODAL
+    ================================================================ */
+    #readModal {
+      display: none; position: fixed; inset: 0; z-index: 100000;
+      background: #000000f0; flex-direction: column;
+    }
+    #readModal.open { display: flex; }
+
+    .rm-header {
+      flex-shrink: 0; background: #0d1f3c;
+      border-bottom: 2px solid #f0a50033;
+      padding: 14px 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .rm-header-left { flex: 1; min-width: 0; }
+    .rm-header-title { font-size: 17px; font-weight: 800; color: #f0a500; }
+    .rm-header-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+    .rm-close-btn {
+      background: none; border: none; color: #64748b; font-size: 24px;
+      cursor: pointer; flex-shrink: 0; line-height: 1; padding: 4px;
+    }
+    .rm-close-btn:hover { color: #ef4444; }
+
+    .rm-progress-wrap { height: 5px; background: #1e3a5f; flex-shrink: 0; }
+    .rm-progress-bar { height: 100%; background: linear-gradient(90deg, #f0a500, #d97706); width: 0%; transition: width .12s; }
+
+    .rm-body { flex: 1; overflow-y: auto; padding: 26px 18px; }
+    .rm-inner { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+    .rm-section-title {
+      font-size: 16px; font-weight: 800; color: #f0a500;
+      border-left: 4px solid #f0a500; padding-left: 12px; margin-bottom: 14px;
+    }
+
+    .rm-step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+    .rm-step-num {
+      min-width: 26px; height: 26px; background: #f0a500; color: #0a1628;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 12px; flex-shrink: 0;
+    }
+    .rm-step-text {
+      font-size: 14px; color: #cbd5e1; line-height: 1.6;
+      background: #0d1f3c; border: 1px solid #1e3a5f; border-radius: 9px;
+      padding: 11px 13px; flex: 1;
+    }
+    .rm-step-text b { color: #fff; }
+    .rm-snote {
+      display: inline-block; margin-top: 7px; font-size: 12px; color: #f0a500;
+      background: #1a2f10; border: 1px solid #f0a50033; border-radius: 5px; padding: 4px 10px;
+    }
+
+    /* Edge warning box inside read modal */
+    .rm-edge-warn {
+      background: #2d1500; border: 2px solid #f0a500; border-radius: 12px;
+      padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .rm-edge-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+    .rm-edge-body { flex: 1; }
+    .rm-edge-title { font-size: 14px; font-weight: 800; color: #f0a500; margin-bottom: 7px; }
+    .rm-edge-text { font-size: 13px; color: #fbbf24; line-height: 1.7; }
+    .rm-edge-text b { color: #fff; }
+    .rm-edge-steps {
+      margin-top: 9px; background: #1a0d00; border-radius: 7px;
+      padding: 9px 12px; font-size: 13px; color: #fbbf24; line-height: 1.9;
+    }
+
+    .rm-sentinel { height: 10px; }
+
+    /* Footer with download button */
+    .rm-footer {
+      flex-shrink: 0; background: #0d1f3c; border-top: 1px solid #1e3a5f;
+      padding: 16px 22px; text-align: center;
+    }
+    .rm-dl-btn {
+      display: inline-block;
+      background: #1e3a5f; color: #475569;
+      font-size: 16px; font-weight: 900; padding: 14px 44px; border-radius: 12px;
+      text-decoration: none; border: 2px solid #334155;
+      cursor: not-allowed; transition: all .3s; pointer-events: none;
+    }
+    .rm-dl-btn.unlocked {
+      background: linear-gradient(135deg, #f0a500, #d97706); color: #0a1628;
+      border-color: transparent; box-shadow: 0 4px 20px #f0a50055;
+      cursor: pointer; pointer-events: auto;
+    }
+    .rm-dl-btn.unlocked:hover { transform: translateY(-2px); }
+    .rm-dl-hint { font-size: 12px; color: #64748b; margin-top: 8px; }
 
     @media (max-width: 600px) {
       .hero h1 { font-size: 34px; }
       nav { padding: 16px 20px; }
+      .lp-btn { padding: 16px 32px; font-size: 17px; min-width: 160px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ================================================================
+       LANGUAGE PICKER OVERLAY
+  ================================================================ -->
+  <div id="langPickerOverlay">
+    <div class="lp-logo">x call <span>proxy</span></div>
+    <div class="lp-tagline">Windows Proxy Manager</div>
+    <div class="lp-heading">
+      Choose your language<br>اپنی زبان منتخب کریں
+    </div>
+    <div class="lp-btns">
+      <button class="lp-btn lp-btn-en" onclick="pickLang('en')">🇬🇧 English</button>
+      <button class="lp-btn lp-btn-ur" onclick="pickLang('ur')">🇵🇰 اردو</button>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav>
     <div class="nav-logo">x call <span>proxy</span></div>
-    <a href="https://wa.me/923274193241" target="_blank" class="btn-wa" style="padding:9px 20px;font-size:14px;">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Contact
-    </a>
+    <div class="nav-right">
+      <button class="btn-translate" onclick="toggleLang()" id="langBtn">🌐 اردو میں پڑھیں</button>
+      <a href="https://wa.me/923274193241" target="_blank" class="btn-wa">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">Windows Proxy Manager</div>
     <h1>x call <span>proxy</span></h1>
-    <p>Professional proxy manager for Windows — connect, lock your IP, and keep it alive. Built for call center & business use.</p>
+    <p>
+      <span data-en>Professional proxy manager for Windows — connect, lock your IP, and keep it alive. Built for call center &amp; business use.</span>
+      <span data-ur>Windows ke liye professional proxy manager — connect karo, IP lock karo, aur alive rakho. Call center aur business ke liye.</span>
+    </p>
     <div class="btn-group">
-      <a href="https://github.com/saqlain1134/xcall-proxy-site/releases/download/v1.0.0/x.call.proxy.exe" class="btn-download">⬇ Download Free</a>
-      <a href="https://youtu.be/cHOm3pHNsgE" target="_blank" class="btn-wa" style="background:linear-gradient(135deg,#ff0000,#cc0000);box-shadow:0 4px 20px #ff000055;">
-        <svg viewBox="0 0 24 24" style="fill:#fff;width:22px;height:22px;"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        How to Use
+      <a href="#" onclick="openReadModal(event)" class="btn-download">
+        <span data-en>⬇ Download Free</span>
+        <span data-ur>⬇ مفت ڈاؤن لوڈ</span>
+      </a>
+      <a href="https://youtu.be/cHOm3pHNsgE" target="_blank" class="btn-yt" style="background:linear-gradient(135deg,#ff0000,#cc0000);box-shadow:0 4px 20px #ff000044;">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span data-en>How to Use</span>
+        <span data-ur>استعمال کا طریقہ</span>
+      </a>
+      <a href="https://youtu.be/pUX5X4ZBOrA" target="_blank" class="btn-yt" style="background:linear-gradient(135deg,#1d4ed8,#1e40af);box-shadow:0 4px 20px #1d4ed844;">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        <span data-en>Browser Setting</span>
+        <span data-ur>براؤزر سیٹنگ</span>
       </a>
     </div>
   </section>
 
   <!-- FEATURES -->
   <section class="features">
-    <h2>Why <span>x call proxy?</span></h2>
+    <h2><span data-en>Why <span style="color:#f0a500">x call proxy?</span></span><span data-ur>کیوں <span style="color:#f0a500">x call proxy?</span></span></h2>
     <div class="grid">
-      <div class="card">
-        <div class="card-icon">🔒</div>
-        <h3>IP Lock Technology</h3>
-        <p>Persistent keepalive connection — your IP stays locked even after hours of use.</p>
+      <div class="card"><div class="card-icon">🔒</div><h3><span data-en>IP Lock Technology</span><span data-ur>IP لاک ٹیکنالوجی</span></h3><p><span data-en>Persistent keepalive connection — your IP stays locked even after hours of use.</span><span data-ur>مستقل کنکشن — گھنٹوں بعد بھی IP لاک رہتی ہے۔</span></p></div>
+      <div class="card"><div class="card-icon">⚡</div><h3><span data-en>One-Click Connect</span><span data-ur>ایک کلک کنیکٹ</span></h3><p><span data-en>Select country, connect — system proxy auto-configured for all browsers instantly.</span><span data-ur>ملک منتخب کرو، کنیکٹ کرو — تمام براؤزر خودکار سیٹ ہو جاتے ہیں۔</span></p></div>
+      <div class="card"><div class="card-icon">🌍</div><h3><span data-en>Country Picker</span><span data-ur>ملک منتخب کریں</span></h3><p><span data-en>Choose from 50+ countries. Fresh IP with every new connection.</span><span data-ur>50+ ممالک میں سے انتخاب کریں۔ ہر نئے کنکشن پر تازہ IP۔</span></p></div>
+      <div class="card"><div class="card-icon">🛡️</div><h3><span data-en>License Protection</span><span data-ur>لائسنس پروٹیکشن</span></h3><p><span data-en>Device-bound licensing — one key per PC. Secure and tamper-proof.</span><span data-ur>ایک key ایک PC — محفوظ اور ناقابل توڑ۔</span></p></div>
+      <div class="card"><div class="card-icon">📊</div><h3><span data-en>IP Usage Tracking</span><span data-ur>IP استعمال ٹریکنگ</span></h3><p><span data-en>Track how many IPs you've used. Full history with location and time.</span><span data-ur>کتنی IPs استعمال ہوئیں — مقام اور وقت کے ساتھ مکمل ریکارڈ۔</span></p></div>
+      <div class="card"><div class="card-icon">🔄</div><h3><span data-en>Tray Mode</span><span data-ur>ٹرے موڈ</span></h3><p><span data-en>Close the window — proxy stays alive. Reopen anytime, same IP continues.</span><span data-ur>ونڈو بند کریں — proxy چلتی رہتی ہے۔ دوبارہ کھولیں، وہی IP جاری رہتی ہے۔</span></p></div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section class="video-section">
+    <h2><span data-en>Watch <span>How It Works</span></span><span data-ur>دیکھیں <span>کیسے کام کرتا ہے</span></span></h2>
+    <div class="video-grid">
+      <div class="video-item">
+        <div class="video-label"><span data-en>▶ How to Use</span><span data-ur>▶ استعمال کا طریقہ</span></div>
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/cHOm3pHNsgE" allowfullscreen></iframe></div>
       </div>
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>One-Click Connect</h3>
-        <p>Select country, connect — system proxy auto-configured for all browsers instantly.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌍</div>
-        <h3>Country Picker</h3>
-        <p>Choose from 50+ countries. Fresh IP with every new connection request.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3>License Protection</h3>
-        <p>Device-bound licensing — one key per PC. Secure and tamper-proof.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <h3>IP Usage Tracking</h3>
-        <p>Track how many IPs you've used. Full history logged with location and time.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔄</div>
-        <h3>Tray Mode</h3>
-        <p>Close the window — proxy stays alive in background. Reopen anytime, same IP continues.</p>
+      <div class="video-item">
+        <div class="video-label"><span data-en>▶ Browser Setting</span><span data-ur>▶ براؤزر سیٹنگ</span></div>
+        <div class="video-wrap"><iframe src="https://www.youtube.com/embed/pUX5X4ZBOrA" allowfullscreen></iframe></div>
       </div>
     </div>
   </section>
 
-  <!-- VIDEO SECTION -->
-  <section class="video-section">
-    <h2>Watch <span>How It Works</span></h2>
-    <div class="video-wrap">
-      <iframe src="https://www.youtube.com/embed/cHOm3pHNsgE" allowfullscreen></iframe>
+  <!-- GUIDE -->
+  <section class="guide-section">
+    <h2><span data-en>Step-by-Step <span style="color:#f0a500">Guide</span></span><span data-ur>مرحلہ وار <span style="color:#f0a500">گائیڈ</span></span></h2>
+    <p class="guide-subtitle">
+      <span data-en>How to set up x call proxy + IX Browser for call center use</span>
+      <span data-ur>x call proxy اور IX Browser کو call center کے لیے کیسے سیٹ اپ کریں</span>
+    </p>
+
+    <!-- PART 1 -->
+    <div class="guide-block">
+      <div class="guide-block-title">
+        <span data-en>Part 1 — x call proxy Setup</span>
+        <span data-ur>حصہ 1 — x call proxy سیٹ اپ</span>
+      </div>
+
+      <!-- ENGLISH -->
+      <ul class="step-list block-en">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Download the tool</b> — Click the Download Free button above and save the .exe file.</div></li>
+
+        <!-- EDGE WARNING (English) -->
+        <li style="list-style:none;">
+          <div class="edge-warn">
+            <div class="edge-warn-icon">⚠️</div>
+            <div class="edge-warn-body">
+              <div class="edge-warn-title">Browser Download Warning — Edge / Chrome</div>
+              <div class="edge-warn-text">
+                After downloading, your browser may show a warning:<br>
+                <b>"x.call.proxy.exe isn't commonly downloaded. Make sure you trust the source."</b><br><br>
+                This is normal — the file is completely safe. To continue:
+                <div class="edge-warn-steps">
+                  1. Click the <b>... (3 dots)</b> icon next to the downloaded file<br>
+                  2. Select <b>Keep</b><br>
+                  3. Click <b>Keep anyway</b> in the confirmation dialog
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>Get a license key</b> — Contact us on WhatsApp to get your personal license key.<div class="step-note">⚠ One key works on one PC only</div></div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Run as Administrator</b> — Right-click the .exe → Run as Administrator. This is required for proxy to work system-wide.</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>Login</b> — Enter your license key and your name, then click Login.</div></li>
+        <li class="step-item"><div class="step-num">5</div><div class="step-text"><b>Enter proxy credentials</b> — Paste your NiceProxy connection string in the top field. The tool auto-fills Host, Port, Username, Password.</div></li>
+        <li class="step-item"><div class="step-num">6</div><div class="step-text"><b>Click Connect</b> — A country picker will appear. Select your desired country and click Connect.</div></li>
+        <li class="step-item"><div class="step-num">7</div><div class="step-text"><b>Connected!</b> — Your IP is now locked. The tool shows your proxy IP, location, and ping.<div class="step-note">✅ All browsers now route through the proxy automatically</div></div></li>
+        <li class="step-item"><div class="step-num">8</div><div class="step-text"><b>Minimize to tray</b> — Close the window (X button). The proxy stays alive in the background. Click the tray icon to reopen — same IP continues, no new request.</div></li>
+      </ul>
+
+      <!-- URDU -->
+      <ul class="step-list block-ur">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>ٹول ڈاؤن لوڈ کریں</b> — اوپر Download Free بٹن پر کلک کریں اور .exe فائل محفوظ کریں۔</div></li>
+
+        <!-- EDGE WARNING (Urdu) -->
+        <li style="list-style:none;">
+          <div class="edge-warn">
+            <div class="edge-warn-icon">⚠️</div>
+            <div class="edge-warn-body">
+              <div class="edge-warn-title">براؤزر Download Warning — Edge / Chrome</div>
+              <div class="edge-warn-text">
+                ڈاؤن لوڈ کے بعد براؤزر یہ warning دکھا سکتا ہے:<br>
+                <b>"x.call.proxy.exe isn't commonly downloaded. Make sure you trust the source."</b><br><br>
+                یہ بالکل نارمل ہے — فائل مکمل طور پر safe ہے۔ آگے بڑھنے کے لیے:
+                <div class="edge-warn-steps">
+                  1. ڈاؤن لوڈ فائل کے پاس <b>... (3 dots)</b> آئیکن پر کلک کریں<br>
+                  2. <b>Keep</b> منتخب کریں<br>
+                  3. تصدیقی dialog میں <b>Keep anyway</b> پر کلک کریں
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>لائسنس key حاصل کریں</b> — WhatsApp پر ہم سے رابطہ کریں اور اپنی ذاتی key لیں۔<div class="step-note">⚠ ایک key صرف ایک PC پر کام کرتی ہے</div></div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Administrator کے طور پر چلائیں</b> — .exe پر right-click کریں → Run as Administrator۔ یہ ضروری ہے تاکہ proxy پورے سسٹم میں کام کرے۔</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>لاگ ان کریں</b> — اپنی license key اور نام درج کریں، پھر Login پر کلک کریں۔</div></li>
+        <li class="step-item"><div class="step-num">5</div><div class="step-text"><b>Proxy credentials درج کریں</b> — NiceProxy کا connection string اوپر والے خانے میں paste کریں۔ ٹول خودکار Host، Port، Username، Password بھر دیتا ہے۔</div></li>
+        <li class="step-item"><div class="step-num">6</div><div class="step-text"><b>Connect پر کلک کریں</b> — ملک منتخب کرنے کا آپشن آئے گا۔ اپنا مطلوبہ ملک منتخب کریں اور Connect کریں۔</div></li>
+        <li class="step-item"><div class="step-num">7</div><div class="step-text"><b>کنیکٹ ہو گئے!</b> — آپ کی IP لاک ہو گئی۔ ٹول آپ کی proxy IP، مقام اور ping دکھائے گا۔<div class="step-note">✅ تمام براؤزر خودکار proxy سے جڑ جاتے ہیں</div></div></li>
+        <li class="step-item"><div class="step-num">8</div><div class="step-text"><b>Tray میں minimize کریں</b> — X بٹن سے بند کریں۔ Proxy پس منظر میں چلتی رہتی ہے۔ Tray آئیکن پر کلک کریں — وہی IP جاری رہتی ہے۔</div></li>
+      </ul>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="guide-block">
+      <div class="guide-block-title">
+        <span data-en>Part 2 — Install IX Browser &amp; Create Account</span>
+        <span data-ur>حصہ 2 — IX Browser انسٹال اور اکاؤنٹ بنائیں</span>
+      </div>
+      <ul class="step-list block-en">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Download IX Browser</b> — Search "IX Browser" on Google and download from the official site (ixbrowser.com).</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>Install</b> — Run the installer and follow the steps. Once installed, open IX Browser.</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Create an account</b> — Click Sign Up, enter your email and password, verify your email, then log in.</div></li>
+      </ul>
+      <ul class="step-list block-ur">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>IX Browser ڈاؤن لوڈ کریں</b> — Google پر "IX Browser" تلاش کریں اور آفیشل سائٹ (ixbrowser.com) سے ڈاؤن لوڈ کریں۔</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>انسٹال کریں</b> — انسٹالر چلائیں اور مراحل مکمل کریں۔ انسٹال ہونے کے بعد IX Browser کھولیں۔</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>اکاؤنٹ بنائیں</b> — Sign Up پر کلک کریں، ای میل اور پاسورڈ درج کریں، ای میل verify کریں، پھر لاگ ان کریں۔</div></li>
+      </ul>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="guide-block">
+      <div class="guide-block-title">
+        <span data-en>Part 3 — IX Browser: When to Use Mobile vs PC Mode</span>
+        <span data-ur>حصہ 3 — IX Browser: Mobile یا PC Mode کب استعمال کریں</span>
+      </div>
+      <ul class="step-list block-en">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Click "New Profile"</b> — Give the profile any name (e.g. "US Account 1"). No proxy setup needed — the system proxy applies automatically to IX Browser.</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>Creating a new account / ID → Use Mobile Mode</b> — When creating a fresh account, set Device Type to Mobile. Websites treat mobile sign-ups as more trusted and natural.<div class="step-note">📱 Mobile Mode = Account / ID creation</div></div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Running ads after account is created → Switch to PC Mode</b> — Once the account is ready, open a new profile with Device Type set to PC. This gives a desktop fingerprint better suited for ad management.<div class="step-note">🖥️ PC Mode = Running ads after account creation</div></div></li>
+      </ul>
+      <ul class="step-list block-ur">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>"New Profile" پر کلک کریں</b> — Profile کو کوئی بھی نام دیں (مثلاً "US Account 1")۔ Proxy سیٹ کرنے کی ضرورت نہیں — system proxy خودکار IX Browser پر لاگو ہو جاتی ہے۔</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>نیا account / ID بنانا ہو → Mobile Mode استعمال کریں</b> — نئی ID بناتے وقت Device Type Mobile رکھیں۔ ویب سائٹس موبائل سے sign-up کو زیادہ قدرتی اور trusted سمجھتی ہیں۔<div class="step-note">📱 Mobile Mode = Account / ID بنانا</div></div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Account بنانے کے بعد ads چلانا ہو → PC Mode پر switch کریں</b> — Account تیار ہونے کے بعد نئی profile بنائیں جس میں Device Type PC رکھیں۔ یہ ad management کے لیے بہتر desktop fingerprint دیتا ہے۔<div class="step-note">🖥️ PC Mode = Account بنانے کے بعد ads چلانا</div></div></li>
+      </ul>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="guide-block">
+      <div class="guide-block-title">
+        <span data-en>Part 4 — Fingerprint Settings (Mobile Mode)</span>
+        <span data-ur>حصہ 4 — Fingerprint سیٹنگ (موبائل موڈ)</span>
+      </div>
+      <ul class="step-list block-en">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Go to Fingerprint Configuration tab</b> in the profile editor.</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>User Agent → Device Type → Mobile</b> — Select Mobile to create a mobile fingerprint. This makes the browser appear as a mobile device to websites.</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Kernel Version → Automatic Matching</b> — Leave as default.</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>Language → ON</b> — Enable "Generate corresponding national language based on Real IP". Language will match your proxy country automatically.</div></li>
+        <li class="step-item"><div class="step-num">5</div><div class="step-text"><b>Timezone → ON</b> — Enable "Generate corresponding timezone based on Real IP". Timezone matches proxy location automatically.</div></li>
+        <li class="step-item"><div class="step-num">6</div><div class="step-text"><b>Location → Block</b> — Block GPS location requests so websites cannot detect your real location.</div></li>
+        <li class="step-item"><div class="step-num">7</div><div class="step-text"><b>Click Confirm</b> — Save the profile and click Open to launch the browser with this fingerprint.<div class="step-note">📱 Use Mobile Mode when creating a new account or ID</div></div></li>
+      </ul>
+      <ul class="step-list block-ur">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Fingerprint Configuration tab کھولیں</b> — profile editor میں یہ tab منتخب کریں۔</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>User Agent → Device Type → Mobile</b> — Mobile منتخب کریں تاکہ موبائل fingerprint بنے۔ ویب سائٹس کو لگے گا کہ آپ موبائل سے آ رہے ہیں۔</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Kernel Version → Automatic Matching</b> — ڈیفالٹ پر چھوڑ دیں۔</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>Language → ON</b> — "Generate corresponding national language based on Real IP" آن کریں۔ زبان خودکار proxy ملک سے میچ ہو گی۔</div></li>
+        <li class="step-item"><div class="step-num">5</div><div class="step-text"><b>Timezone → ON</b> — "Generate corresponding timezone based on Real IP" آن کریں۔ ٹائم زون خودکار سیٹ ہو گا۔</div></li>
+        <li class="step-item"><div class="step-num">6</div><div class="step-text"><b>Location → Block</b> — GPS لوکیشن بلاک کریں تاکہ ویب سائٹس آپ کی اصل لوکیشن نہ جان سکیں۔</div></li>
+        <li class="step-item"><div class="step-num">7</div><div class="step-text"><b>Confirm پر کلک کریں</b> — Profile محفوظ کریں اور Open کریں۔<div class="step-note">📱 نیا account یا ID بناتے وقت Mobile Mode استعمال کریں</div></div></li>
+      </ul>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="guide-block">
+      <div class="guide-block-title">
+        <span data-en>Part 5 — Fingerprint Settings (PC Mode)</span>
+        <span data-ur>حصہ 5 — Fingerprint سیٹنگ (PC موڈ)</span>
+      </div>
+      <ul class="step-list block-en">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>Same steps as Mobile</b> — Follow Part 4 steps 1 and 3–7 exactly the same.</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>User Agent → Device Type → PC</b> — Select PC instead of Mobile. This creates a desktop fingerprint. OS: Windows 10, Browser: Chrome (latest).</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Screen Resolution → Follow Device Setting</b> — Uses your actual screen size for a natural fingerprint.</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>Fonts → System Default</b> — Leave as default.<div class="step-note">🖥️ Use PC Mode after account is created — for running and managing ads</div></div></li>
+      </ul>
+      <ul class="step-list block-ur">
+        <li class="step-item"><div class="step-num">1</div><div class="step-text"><b>وہی مراحل جیسے موبائل</b> — حصہ 4 کے مراحل 1 اور 3 تا 7 بالکل ویسے ہی کریں۔</div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-text"><b>User Agent → Device Type → PC</b> — Mobile کی جگہ PC منتخب کریں۔ OS: Windows 10، Browser: Chrome۔</div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-text"><b>Screen Resolution → Follow Device Setting</b> — آپ کی اصل اسکرین سائز استعمال ہو گی۔</div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-text"><b>Fonts → System Default</b> — ڈیفالٹ پر چھوڑ دیں۔<div class="step-note">🖥️ Account بنانے کے بعد ads چلانے کے لیے PC Mode استعمال کریں</div></div></li>
+      </ul>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="cta">
-    <h2>Ready to get started?</h2>
-    <p>Download the tool or contact us on WhatsApp for a license key.</p>
+    <h2><span data-en>Ready to get started?</span><span data-ur>شروع کرنے کے لیے تیار ہیں؟</span></h2>
+    <p><span data-en>Download the tool or contact us on WhatsApp for a license key.</span><span data-ur>ٹول ڈاؤن لوڈ کریں یا license key کے لیے WhatsApp پر رابطہ کریں۔</span></p>
     <div class="btn-group">
-      <a href="https://github.com/saqlain1134/xcall-proxy-site/releases/download/v1.0.0/x.call.proxy.exe" class="btn-download">⬇ Download Now</a>
-      <a href="https://wa.me/923274193241" target="_blank" class="btn-wa">
+      <a href="#" onclick="openReadModal(event)" class="btn-download">
+        <span data-en>⬇ Download Now</span><span data-ur>⬇ ابھی ڈاؤن لوڈ کریں</span>
+      </a>
+      <a href="https://wa.me/923274193241" target="_blank" class="btn-wa" style="font-size:16px;padding:14px 28px;">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Get License on WhatsApp
+        <span data-en>Get License on WhatsApp</span><span data-ur>WhatsApp پر license لیں</span>
       </a>
     </div>
   </section>
@@ -272,5 +541,212 @@
     <p>© 2026 x call proxy — Developed by M Saqlain &nbsp;|&nbsp; All rights reserved</p>
   </footer>
 
+  <!-- FLOATING LANG BUTTON -->
+  <button class="float-lang" onclick="toggleLang()" id="floatLangBtn">🌐 اردو</button>
+
+  <!-- ================================================================
+       READ-BEFORE-DOWNLOAD MODAL
+  ================================================================ -->
+  <div id="readModal">
+    <div class="rm-header">
+      <div class="rm-header-left">
+        <div class="rm-header-title">
+          <span data-en>📋 Read Before Downloading</span>
+          <span data-ur>📋 ڈاؤن لوڈ سے پہلے پڑھیں</span>
+        </div>
+        <div class="rm-header-sub">
+          <span data-en>Scroll to the end to unlock the Download button</span>
+          <span data-ur>Download بٹن unlock کرنے کے لیے آخر تک scroll کریں</span>
+        </div>
+      </div>
+      <button class="rm-close-btn" onclick="closeReadModal()">✕</button>
+    </div>
+
+    <div class="rm-progress-wrap">
+      <div class="rm-progress-bar" id="rmProgBar"></div>
+    </div>
+
+    <div class="rm-body" id="rmBody" onscroll="onRmScroll()">
+      <div class="rm-inner">
+
+        <!-- Edge Warning (most important — shown first) -->
+        <div>
+          <div class="rm-edge-warn block-en">
+            <div class="rm-edge-icon">⚠️</div>
+            <div class="rm-edge-body">
+              <div class="rm-edge-title">Browser Download Warning — Edge / Chrome</div>
+              <div class="rm-edge-text">
+                After downloading, your browser may show:<br>
+                <b>"x.call.proxy.exe isn't commonly downloaded. Make sure you trust the source."</b><br><br>
+                This is normal — the file is completely safe. To continue:
+                <div class="rm-edge-steps">
+                  1️⃣ Click the <b>... (3 dots)</b> icon next to the downloaded file<br>
+                  2️⃣ Click <b>Keep</b><br>
+                  3️⃣ Click <b>Keep anyway</b> to confirm
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="rm-edge-warn block-ur">
+            <div class="rm-edge-icon">⚠️</div>
+            <div class="rm-edge-body">
+              <div class="rm-edge-title">براؤزر Download Warning — Edge / Chrome</div>
+              <div class="rm-edge-text">
+                ڈاؤن لوڈ کے بعد براؤزر یہ پیغام دکھا سکتا ہے:<br>
+                <b>"x.call.proxy.exe isn't commonly downloaded. Make sure you trust the source."</b><br><br>
+                یہ بالکل نارمل ہے — فائل مکمل طور پر safe ہے۔ آگے بڑھنے کے لیے:
+                <div class="rm-edge-steps">
+                  1️⃣ ڈاؤن لوڈ فائل کے پاس <b>... (3 dots)</b> آئیکن پر کلک کریں<br>
+                  2️⃣ <b>Keep</b> پر کلک کریں<br>
+                  3️⃣ <b>Keep anyway</b> پر کلک کریں
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 1 -->
+        <div>
+          <div class="rm-section-title">
+            <span data-en>Part 1 — x call proxy Setup</span>
+            <span data-ur>حصہ 1 — x call proxy سیٹ اپ</span>
+          </div>
+          <div class="rm-step"><div class="rm-step-num">1</div><div class="rm-step-text"><b><span data-en>Download the .exe file</span><span data-ur>.exe فائل ڈاؤن لوڈ کریں</span></b> — <span data-en>Click Download below and save the file.</span><span data-ur>نیچے Download کریں اور فائل محفوظ کریں۔</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">2</div><div class="rm-step-text"><b><span data-en>Get license key</span><span data-ur>License key لیں</span></b> — <span data-en>Contact us on WhatsApp before running the tool. One key = one PC only.</span><span data-ur>ٹول چلانے سے پہلے WhatsApp پر رابطہ کریں۔ ایک key = صرف ایک PC۔</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">3</div><div class="rm-step-text"><b><span data-en>Run as Administrator</span><span data-ur>Administrator کے طور پر چلائیں</span></b> — <span data-en>Right-click the .exe → Run as Administrator. Required for system proxy to work.</span><span data-ur>.exe پر right-click کریں → Run as Administrator۔ System proxy کے لیے ضروری ہے۔</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">4</div><div class="rm-step-text"><b><span data-en>Login with your key &amp; name</span><span data-ur>Key اور نام سے Login کریں</span></b></div></div>
+          <div class="rm-step"><div class="rm-step-num">5</div><div class="rm-step-text"><b><span data-en>Paste NiceProxy connection string</span><span data-ur>NiceProxy connection string paste کریں</span></b> — <span data-en>Tool auto-fills all fields (Host, Port, Username, Password).</span><span data-ur>ٹول خودکار تمام fields بھر دیتا ہے۔</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">6</div><div class="rm-step-text"><b><span data-en>Select country → Connect</span><span data-ur>ملک منتخب کریں → Connect کریں</span></b> — <span data-en>Your IP is now locked.</span><span data-ur>آپ کی IP لاک ہو گئی۔</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">7</div><div class="rm-step-text"><b><span data-en>Minimize to tray</span><span data-ur>Tray میں minimize کریں</span></b> — <span data-en>Close the window. Proxy stays alive. Reopen from tray = same IP continues.</span><span data-ur>ونڈو بند کریں۔ Proxy چلتی رہتی ہے۔ Tray سے دوبارہ کھولیں = وہی IP۔</span><div class="rm-snote">✅ <span data-en>All browsers route through proxy automatically</span><span data-ur>تمام براؤزر خودکار proxy سے جڑ جاتے ہیں</span></div></div></div>
+        </div>
+
+        <!-- Part 2 -->
+        <div>
+          <div class="rm-section-title">
+            <span data-en>Part 2 — Install IX Browser</span>
+            <span data-ur>حصہ 2 — IX Browser انسٹال کریں</span>
+          </div>
+          <div class="rm-step"><div class="rm-step-num">1</div><div class="rm-step-text"><b><span data-en>Search "IX Browser" → download from ixbrowser.com</span><span data-ur>"IX Browser" search کریں → ixbrowser.com سے ڈاؤن لوڈ کریں</span></b></div></div>
+          <div class="rm-step"><div class="rm-step-num">2</div><div class="rm-step-text"><b><span data-en>Install and create account (Sign Up with email)</span><span data-ur>انسٹال کریں اور email سے account بنائیں</span></b></div></div>
+        </div>
+
+        <!-- Part 3 -->
+        <div>
+          <div class="rm-section-title">
+            <span data-en>Part 3 — IX Browser: Mobile vs PC Mode</span>
+            <span data-ur>حصہ 3 — IX Browser: Mobile یا PC Mode</span>
+          </div>
+          <div class="rm-step"><div class="rm-step-num">1</div><div class="rm-step-text">
+            <b><span data-en>Creating a new account / ID → Mobile Mode</span><span data-ur>نیا account / ID بنانا → Mobile Mode</span></b><br>
+            <span data-en>Set Device Type to <b>Mobile</b> when registering a fresh account. More trusted by websites.</span>
+            <span data-ur>نئی ID بناتے وقت Device Type <b>Mobile</b> رکھیں۔ ویب سائٹس موبائل sign-up کو زیادہ trusted سمجھتی ہیں۔</span>
+            <div class="rm-snote">📱 <span data-en>Mobile Mode = Account / ID creation</span><span data-ur>Mobile Mode = Account / ID بنانا</span></div>
+          </div></div>
+          <div class="rm-step"><div class="rm-step-num">2</div><div class="rm-step-text">
+            <b><span data-en>Running ads after account is ready → PC Mode</span><span data-ur>Account بنانے کے بعد ads → PC Mode</span></b><br>
+            <span data-en>Switch to Device Type <b>PC</b> for ad management. Better desktop fingerprint for running campaigns.</span>
+            <span data-ur>Ads چلانے کے لیے Device Type <b>PC</b> پر switch کریں۔ Campaign چلانے کے لیے بہتر fingerprint۔</span>
+            <div class="rm-snote">🖥️ <span data-en>PC Mode = Running ads after account creation</span><span data-ur>PC Mode = Account بنانے کے بعد ads چلانا</span></div>
+          </div></div>
+        </div>
+
+        <!-- Part 4 -->
+        <div>
+          <div class="rm-section-title">
+            <span data-en>Part 4 — Fingerprint: Mobile Mode</span>
+            <span data-ur>حصہ 4 — Fingerprint: Mobile Mode</span>
+          </div>
+          <div class="rm-step"><div class="rm-step-num">1</div><div class="rm-step-text"><b><span data-en>Fingerprint Configuration tab → Device Type → Mobile</span><span data-ur>Fingerprint Configuration tab → Device Type → Mobile</span></b></div></div>
+          <div class="rm-step"><div class="rm-step-num">2</div><div class="rm-step-text"><b><span data-en>Language → ON &nbsp;·&nbsp; Timezone → ON</span><span data-ur>Language → ON &nbsp;·&nbsp; Timezone → ON</span></b> <span data-en>(auto-match from proxy IP)</span><span data-ur>(proxy IP سے خودکار میچ)</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">3</div><div class="rm-step-text"><b><span data-en>Location → Block &nbsp;·&nbsp; Confirm → Open</span><span data-ur>Location → Block &nbsp;·&nbsp; Confirm → Open</span></b></div></div>
+        </div>
+
+        <!-- Part 5 -->
+        <div>
+          <div class="rm-section-title">
+            <span data-en>Part 5 — Fingerprint: PC Mode</span>
+            <span data-ur>حصہ 5 — Fingerprint: PC Mode</span>
+          </div>
+          <div class="rm-step"><div class="rm-step-num">1</div><div class="rm-step-text"><b><span data-en>Same as Mobile but Device Type → PC</span><span data-ur>Mobile جیسا لیکن Device Type → PC</span></b> <span data-en>(OS: Windows 10, Browser: Chrome)</span><span data-ur>(OS: Windows 10, Browser: Chrome)</span></div></div>
+          <div class="rm-step"><div class="rm-step-num">2</div><div class="rm-step-text"><b><span data-en>Screen Resolution → Follow Device Setting</span><span data-ur>Screen Resolution → Follow Device Setting</span></b><div class="rm-snote">💡 <span data-en>Mobile for social media · PC for web platforms</span><span data-ur>Social media کے لیے Mobile · Web platforms کے لیے PC</span></div></div></div>
+        </div>
+
+        <div class="rm-sentinel" id="rmSentinel"></div>
+      </div>
+    </div>
+
+    <div class="rm-footer">
+      <a href="https://github.com/saqlain1134/xcall-proxy-site/releases/download/v1.0.0/x.call.proxy.exe"
+         class="rm-dl-btn" id="rmDlBtn">
+        <span data-en>⬇ Download x call proxy.exe</span>
+        <span data-ur>⬇ x call proxy.exe ڈاؤن لوڈ کریں</span>
+      </a>
+      <p class="rm-dl-hint" id="rmDlHint">
+        <span data-en>↓ Keep scrolling to unlock the download</span>
+        <span data-ur>↓ Download unlock کرنے کے لیے نیچے scroll کریں</span>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // ── Language ──────────────────────────────────────────────────────
+
+    function pickLang(lang) {
+      localStorage.setItem('xcProxy_lang', lang);
+      document.getElementById('langPickerOverlay').style.display = 'none';
+      if (lang === 'ur') document.body.classList.add('urdu');
+      _syncLangBtns();
+    }
+
+    function toggleLang() {
+      document.body.classList.toggle('urdu');
+      localStorage.setItem('xcProxy_lang', document.body.classList.contains('urdu') ? 'ur' : 'en');
+      _syncLangBtns();
+    }
+
+    function _syncLangBtns() {
+      var isUr = document.body.classList.contains('urdu');
+      document.getElementById('floatLangBtn').textContent = isUr ? '🌐 English' : '🌐 اردو';
+      document.getElementById('langBtn').textContent = isUr ? '🌐 Translate to English' : '🌐 اردو میں پڑھیں';
+    }
+
+    // ── Read Modal ────────────────────────────────────────────────────
+
+    var _rmUnlocked = false;
+
+    function openReadModal(e) {
+      e.preventDefault();
+      _rmUnlocked = false;
+      document.getElementById('rmDlBtn').classList.remove('unlocked');
+      document.getElementById('rmDlHint').style.display = 'block';
+      document.getElementById('rmProgBar').style.width = '0%';
+      document.getElementById('rmBody').scrollTop = 0;
+      document.getElementById('readModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeReadModal() {
+      document.getElementById('readModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function onRmScroll() {
+      var body = document.getElementById('rmBody');
+      var total = body.scrollHeight - body.clientHeight;
+      var pct = total > 0 ? Math.min(100, (body.scrollTop / total) * 100) : 100;
+      document.getElementById('rmProgBar').style.width = pct + '%';
+      if (pct >= 95 && !_rmUnlocked) {
+        _rmUnlocked = true;
+        document.getElementById('rmDlBtn').classList.add('unlocked');
+        document.getElementById('rmDlHint').style.display = 'none';
+      }
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────
+
+    (function () {
+      _syncLangBtns();
+    })();
+  </script>
 </body>
 </html>
